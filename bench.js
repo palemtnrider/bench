@@ -31,7 +31,7 @@ const Skill = {
         }
     },
     methods: {
-        addskill: function(e) {
+        addSkill: function(e) {
             e.preventDefault()
             skillRef.push({'value': this.newskill})
         this.newskill = ''
