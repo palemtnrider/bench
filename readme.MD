@@ -22,4 +22,4 @@
       - phone: string
 
 ## TODO
-- Add in bootstrap-vue
+- Add authentication so only logged in users can use the app.
