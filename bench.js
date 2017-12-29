@@ -14,6 +14,7 @@ let app = firebase.initializeApp(config);
 let db = app.database();
 let skillRef = db.ref('skills');
 let projectRef = db.ref('projects');
+let resourceRef = db.ref('resourcess');
 
 
 const Skill = {
@@ -38,7 +39,27 @@ const Skill = {
 
     }
 }
-const Resource = {template: '<div>Resources</div>'}
+const Resource = {
+    template: '#resource-template',
+    data: function () {
+        return {
+            newResource: {name:'', email: '', manager: '', availableDate: '', skills:[]}
+        }
+    },
+    firebase: function () {
+        return {
+            skills: skillRef,
+            resources: resourceRef
+        }
+    },
+    methods: {
+        addResource: function(e) {
+            e.preventDefault()
+            resourceRef.push(Object.assign({}, this.newResource)),
+            this.newResource = {name:'', email: '', manager: '', availableDate: '', skills:[]}
+        }
+    }
+}
 const Project = {
     template: '#project-template',
     data: function () {
