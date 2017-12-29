@@ -4,14 +4,14 @@ Bench
 
 <script src="https://unpkg.com/vue"></script> 
 <script src="https://unpkg.com/vue-router"></script> 
-<script type="text/x-template" id="tag-template">
+<script type="text/x-template" id="skill-template">
     <div>
     <ul>
-        <li v-for="tag in tags">
-            {{ tag }}
+        <li v-for="skill in skills">
+            {{ skill }}
         </li>
     </ul>
-    <input v-model="newTag" @keyup.enter="addTag" placeholder="Add tag"/>
+    <input v-model="newskill" @keyup.enter="addskill" placeholder="Add skill"/>
 </div>
 </script>
 <script type="text/x-template" id="project-template">
@@ -41,7 +41,7 @@ Bench
 <div id="bench-app">
     <h1>Welcome to the bench</h1>
     <p>
-        <router-link to="/tags">Tags</router-link>
+        <router-link to="/skills">Skills</router-link>
         <router-link to="/resources">Resources</router-link>
         <router-link to="/Projects">Projects</router-link>
     </p>

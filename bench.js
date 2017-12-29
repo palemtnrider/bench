@@ -2,26 +2,26 @@
 Bench vue components
 **/
 
-var localTags = [
-    'foo',
-    'bar'
+var localskills = [
+    'Java',
+    'C++'
 ]
 
 var localProjects = []
 
-const Tag = {
-    template: '#tag-template',
+const skill = {
+    template: '#skill-template',
     data: function() {
         return {
-            tags: localTags,
-            newTag: ''
+            skills: localskills,
+            newskill: ''
         }
 
     },
     methods: {
-        addTag: function() {
-            this.tags.push(this.newTag)
-        this.newTag = ''
+        addskill: function() {
+            this.skills.push(this.newskill)
+        this.newskill = ''
         }
 
     }
@@ -33,7 +33,7 @@ const Project = {
         return {
             projects: localProjects,
             newProject: {name:'', owner: '', desc: '', startDate: '', skills:[]},
-            skills: localTags
+            skills: localskills
         }
     },
     methods: {
@@ -46,7 +46,7 @@ const Project = {
 
 var router = new VueRouter({
     routes: [
-        {path:'/tags', component: Tag},
+        {path:'/skills', component: skill},
         {path:'/resources', component: Resource},
         {path:'/projects', component: Project}
     ]
@@ -54,17 +54,5 @@ var router = new VueRouter({
 
 new Vue({
     el: "#bench-app",
-    router,
-    data: {
-        foobar: "I'm alive",
-        tags: ['foo','bar'],
-        newTag: ''
-
-    },
-    methods: {
-        addTag: function() {
-            this.tags.push(this.newTag)
-            this.newTag = ''
-        }
-    }
+    router
 })
