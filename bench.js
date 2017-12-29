@@ -2,25 +2,37 @@
 Bench vue components
 **/
 
-var localskills = [
-    'Java',
-    'C++'
-]
+var config = {
+    apiKey: "AIzaSyAcCSHtU-QIFgGF4ppysJX7I_QsVQnMMK4",
+    authDomain: "bench-13481.firebaseapp.com",
+    databaseURL: "https://bench-13481.firebaseio.com",
+    projectId: "bench-13481",
+    storageBucket: "",
+    messagingSenderId: "414982338775"
+  };
+let app = firebase.initializeApp(config);
+let db = app.database();
+let skillRef = db.ref('skills');
+let projectRef = db.ref('projects');
 
-var localProjects = []
 
-const skill = {
+const Skill = {
     template: '#skill-template',
     data: function() {
         return {
-            skills: localskills,
             newskill: ''
         }
 
     },
+    firebase: function() {
+        return {
+            skills: skillRef
+        }
+    },
     methods: {
-        addskill: function() {
-            this.skills.push(this.newskill)
+        addskill: function(e) {
+            e.preventDefault()
+            skillRef.push({'value': this.newskill})
         this.newskill = ''
         }
 
@@ -31,14 +43,19 @@ const Project = {
     template: '#project-template',
     data: function () {
         return {
-            projects: localProjects,
-            newProject: {name:'', owner: '', desc: '', startDate: '', skills:[]},
-            skills: localskills
+            newProject: {name:'', owner: '', desc: '', startDate: '', skills:[]}
+        }
+    },
+    firebase: function () {
+        return {
+            skills: skillRef,
+            projects: projectRef
         }
     },
     methods: {
-        addProject: function() {
-            localProjects.push(Object.assign({}, this.newProject)),
+        addProject: function(e) {
+            e.preventDefault()
+            projectRef.push(Object.assign({}, this.newProject)),
             this.newProject = {name:'', owner: '', desc: '', startDate: '', skills:[]}
         }
     }
@@ -46,7 +63,7 @@ const Project = {
 
 var router = new VueRouter({
     routes: [
-        {path:'/skills', component: skill},
+        {path:'/skills', component: Skill},
         {path:'/resources', component: Resource},
         {path:'/projects', component: Project}
     ]

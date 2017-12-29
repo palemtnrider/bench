@@ -4,11 +4,13 @@ Bench
 
 <script src="https://unpkg.com/vue"></script> 
 <script src="https://unpkg.com/vue-router"></script> 
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script src="https://unpkg.com/vuefire"></script>
 <script type="text/x-template" id="skill-template">
     <div>
     <ul>
         <li v-for="skill in skills">
-            {{ skill }}
+            {{ skill.value }}
         </li>
     </ul>
     <input v-model="newskill" @keyup.enter="addskill" placeholder="Add skill"/>
@@ -27,7 +29,7 @@ Bench
     Start Date: <input v-model="newProject.startDate"/><br/>
     Skills: <select v-model="newProject.skills" multiple>
         <option v-for="skill in skills">
-            {{ skill }}
+            {{ skill.value }}
         </option>
     </select><br/>
     <button @click="addProject" type="submit">Add Project</button>
