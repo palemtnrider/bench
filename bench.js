@@ -17,6 +17,29 @@ let projectRef = db.ref('projects');
 let resourceRef = db.ref('resourcess');
 
 
+const Login = {
+    template: '#login-template',
+    data: function() {
+        return {
+            email: '',
+            password: ''
+        }
+
+    },
+    methods: {
+        login: function(e) {
+            firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+                function(user) {
+                    alert('You are now logged in')
+                }, 
+                function(err) {
+                    alert('Invalid username/password')
+                    this.password=''
+                })
+        }
+
+    }
+}
 const Skill = {
     template: '#skill-template',
     data: function() {
@@ -81,16 +104,56 @@ const Project = {
         }
     }
 }
+var signOut = function() {
+    if (firebase.auth().currentUser) {
+        firebase.auth().signOut().then(
+            function(user) {
+                console.log('You are now signed out')
+            }, 
+            function(err) {
+                alert('Failed to signout')
+            })
+    }
+    return '/login'
 
+}
 var router = new VueRouter({
     routes: [
-        {path:'/skills', component: Skill},
-        {path:'/resources', component: Resource},
-        {path:'/projects', component: Project}
+        {path: '/skills', component: Skill, meta: {requiresAuth: true}},
+        {path: '/resources', component: Resource, meta: {requiresAuth: true}},
+        {path: '/projects', component: Project, meta: {requiresAuth: true}},
+        {path: '/login', component: Login, nanem: 'login'},
+        {path: '/signout'},
+        {path: '*', redirect: '/login'},
+        {path: '/', redirect: '/login'}
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    let currentUser = firebase.auth().currentUser;
+    if (currentUser && to.path === '/signout') {
+        signOut()
+        next('login')
+    } else { 
+        let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+        if (requiresAuth && !currentUser) next('login')
+        else next()
+    } 
 })
 
 new Vue({
     el: "#bench-app",
-    router
+    router,
+    methods: {
+        signOut: function(e) {
+            firebase.auth().signOut().then(
+                function(user) {
+                    console.log('You are now signed out')
+                }, 
+                function(err) {
+                    alert('Failed to signout')
+                })
+            }
+        }
+
 })
