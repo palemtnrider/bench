@@ -22,4 +22,6 @@
       - phone: string
 
 ## TODO
-- Add authentication so only logged in users can use the app.
+- Tests
+- Show avaliable resources and projects over time
+- associate a resource with a project.
